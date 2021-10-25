@@ -1,14 +1,14 @@
-import Account from "../model/account";
-import Authorizer from "../model/authorizer";
-import Operation from "../model/operation";
-import AccountUniquenessValidation from "../model/validation/account-uniqueness-validation";
-import ActiveCardValidation from "../model/validation/active-card-validation";
-import DoubledTransactionValidation from "../model/validation/doubled-transaction-validation";
-import InitializedAccountValidation from "../model/validation/initialized-account-validation";
-import SufficientLimitValidation from "../model/validation/sufficient-limit-validation";
-import TransactionFrequencyValidation from "../model/validation/transaction-frequency-validation";
-import Controller from "../types/controller";
-import CommandLineView from "../view/command-line";
+import Account from "src/model/account";
+import Authorizer from "src/model/authorizer";
+import Operation from "src/model/operation";
+import AccountUniquenessValidation from "src/model/validation/account-uniqueness-validation";
+import ActiveCardValidation from "src/model/validation/active-card-validation";
+import DoubledTransactionValidation from "src/model/validation/doubled-transaction-validation";
+import InitializedAccountValidation from "src/model/validation/initialized-account-validation";
+import SufficientLimitValidation from "src/model/validation/sufficient-limit-validation";
+import TransactionFrequencyValidation from "src/model/validation/transaction-frequency-validation";
+import Controller from "src/types/controller";
+import CommandLineView from "src/view/command-line";
 
 /**
  * Account controller

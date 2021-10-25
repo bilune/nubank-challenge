@@ -1,6 +1,6 @@
-import Account from "../account";
-import UserInput from "../user-input";
-import Violation from "./violation";
+import Account from "src/model/account";
+import UserInput from "src/model/user-input";
+import Violation from "src/model/validation/violation";
 
 /**
  * Validation base class. It stores a related violation that is added to the

@@ -1,6 +1,6 @@
-import Violation from "./violation";
-import Validation from "./validation";
-import Account from "../account";
+import Violation from "src/model/validation/violation";
+import Validation from "src/model/validation/validation";
+import Account from "src/model/account";
 
 class CardNotActiveViolation implements Violation {
   violationName = "card-not-active";

@@ -1,6 +1,6 @@
 import * as readline from "readline";
-import Controller from "../types/controller";
-import View from "../types/view";
+import Controller from "src/types/controller";
+import View from "src/types/view";
 
 export default class CommandLineView implements View {
   /**

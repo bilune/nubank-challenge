@@ -1,7 +1,7 @@
-import Violation from "./violation";
-import Validation from "./validation";
-import Account from "../account";
-import { TransactionUserInput } from "../user-input";
+import Account from "src/model/account";
+import { TransactionUserInput } from "src/model/user-input";
+import Violation from "src/model/validation/violation";
+import Validation from "src/model/validation/validation";
 
 class HighFrequencySmallIntervalViolation implements Violation {
   violationName = "high-frequency-small-interval";

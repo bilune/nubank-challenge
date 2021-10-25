@@ -1,7 +1,7 @@
-import Account from "./account";
-import UserInput from "./user-input";
-import Validation from "./validation/validation";
-import Violation from "./validation/violation";
+import Account from "src/model/account";
+import UserInput from "src/model/user-input";
+import Validation from "src/model/validation/validation";
+import Violation from "src/model/validation/violation";
 
 /**
  * Class to store validations to be applied to a certain type of user's input.

@@ -1,6 +1,6 @@
-import Account from "../account";
-import Violation from "./violation";
-import Validation from "./validation";
+import Account from "src/model/account";
+import Violation from "src/model/validation/violation";
+import Validation from "src/model/validation/validation";
 
 class AccountAlreadyCreatedViolation implements Violation {
   violationName = "account-already-initialized";
