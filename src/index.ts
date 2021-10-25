@@ -1,4 +1,4 @@
-import AccountController from "src/controllers/account";
+import AccountController from "src/controller/account";
 import Account from "src/model/account";
 import CommandLineView from "src/view/command-line";
 
