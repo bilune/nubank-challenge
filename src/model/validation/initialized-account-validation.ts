@@ -6,14 +6,21 @@ class AccountNotInitializedViolation implements Violation {
   violationName = "account-not-initialized";
 }
 
-export default class InitializedAccountValidation implements Validation {
-  private violation = new AccountNotInitializedViolation();
-
-  public validate(account: Account): boolean {
-    return account.wasInitialized();
+/**
+ * No transaction should be accepted without a properly initialized account: account-not-initialized
+ */
+export default class InitializedAccountValidation extends Validation {
+  constructor() {
+    const violation = new AccountNotInitializedViolation();
+    super(violation);
   }
 
-  public getViolation(): Violation {
-    return this.violation;
+  /**
+   * Checks whether the account was initialized.
+   * @param account Current account
+   * @returns A boolean indicating if it was already initialized
+   */
+  public validate(account: Account): boolean {
+    return account.wasInitialized();
   }
 }

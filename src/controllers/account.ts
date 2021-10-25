@@ -10,6 +10,9 @@ import TransactionFrequencyValidation from "../model/validation/transaction-freq
 import Controller from "../types/controller";
 import CommandLineView from "../view/command-line";
 
+/**
+ * Account controller
+ */
 export default class AccountController implements Controller {
   private account: Account;
   private view: CommandLineView;
@@ -19,12 +22,21 @@ export default class AccountController implements Controller {
     this.view = view;
   }
 
+  /**
+   * It starts the execution of the program.
+   */
   public execute(): Promise<void> {
+    /**
+     * Account authorizer
+     */
     const accountAuthorizer = new Authorizer();
     accountAuthorizer.addValidation(new AccountUniquenessValidation());
 
     this.account.setAccountAuthorizer(accountAuthorizer);
 
+    /**
+     * Transaction authorizer
+     */
     const transactionAuthorizer = new Authorizer();
     transactionAuthorizer.addValidation(new InitializedAccountValidation());
     transactionAuthorizer.addValidation(new SufficientLimitValidation());
@@ -32,30 +44,34 @@ export default class AccountController implements Controller {
     transactionAuthorizer.addValidation(
       new TransactionFrequencyValidation(3, 60 * 2 * 1000)
     );
-    transactionAuthorizer.addValidation(new DoubledTransactionValidation(60 * 2 * 1000));
+    transactionAuthorizer.addValidation(
+      new DoubledTransactionValidation(60 * 2 * 1000)
+    );
 
     this.account.setTransactionAuthorizer(transactionAuthorizer);
 
+    // It waits until the view sends an user input.
     return this.view.addListener(this);
   }
 
+  /**
+   * It receives an user input and try to authorize the operation.
+   * @param data 
+   * @returns 
+   */
   public dispatch(data: Record<string, any>): void {
     let operation: Operation;
     if ("account" in data) {
-      operation = this.account.init(
-        data.account["active-card"],
-        data.account["available-limit"]
-      );
+      const { "active-card": activeCard, "available-limit": availableLimit } =
+        data.account;
+      operation = this.account.init({ activeCard, availableLimit });
     } else if ("transaction" in data) {
-      operation = this.account.process(
-        data.transaction["merchant"],
-        data.transaction["amount"],
-        new Date(data.transaction["time"])
-      );
+      operation = this.account.process(data.transaction);
     } else {
       return;
     }
 
+    // Once the operation is created, it is send to the view to be presented to the user.
     this.view.modelUpdated(operation.toSource());
   }
 }

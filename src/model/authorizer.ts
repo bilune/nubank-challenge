@@ -1,19 +1,37 @@
 import Account from "./account";
+import UserInput from "./user-input";
 import Validation from "./validation/validation";
 import Violation from "./validation/violation";
 
+/**
+ * Class to store validations to be applied to a certain type of user's input.
+ */
 export default class Authorizer {
   private validations: Validation[] = [];
 
-  public addValidation(validation: Validation) {
+  /**
+   * Add a custom validation to the authorizer. Then, the list of validations
+   * is iterated by `validate` method to find violations. 
+   * @param validation 
+   */
+  public addValidation(validation: Validation): void {
     this.validations.push(validation);
   }
 
-  public validate(account: Account, transaction: any): Violation[] {
+  /**
+   * Validate a received input.
+   * If the list of returned violations is empty the operation can be considered valid.
+   * @param authorizer An authorizer with custom validations
+   * @param input User's input
+   * @returns A list of violations
+   */
+  public validate(account: Account, input: UserInput): Violation[] {
     return this.validations.reduce<Violation[]>((prev, validation) => {
-      if (validation.validate(account, transaction)) {
+      if (validation.validate(account, input)) {
+        // If it is valid, no violation is added to the array.
         return prev;
       }
+      // Otherwise, the violation is added.
       return [...prev, validation.getViolation()];
     }, []);
   }
