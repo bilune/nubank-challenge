@@ -1,5 +1,5 @@
-import Account from "src/model/account";
-import Violation from "src/model/validation/violation";
+import Account from "./account";
+import Violation from "./validation/violation";
 
 /**
  * Account's movement that reflects its state in given time.

@@ -1,6 +1,6 @@
-import Authorizer from "src/model/authorizer";
-import Operation from "src/model/operation";
-import { AccountCreationUserInput, TransactionUserInput } from "src/model/user-input";
+import Authorizer from "./authorizer";
+import Operation from "./operation";
+import { AccountCreationUserInput, TransactionUserInput } from "./user-input";
 
 /**
  * It stores current account state and allows its modification through init and process methods.

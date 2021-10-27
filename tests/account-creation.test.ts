@@ -1,6 +1,6 @@
-import { authorizer } from "src/.";
-import expectStdout from "tests/utils/expectStdout";
-import stdin from "tests/utils/stdin";
+import { authorizer } from "../src/index";
+import expectStdout from "./utils/expectStdout";
+import stdin from "./utils/stdin";
 
 const mock = jest.spyOn(global.console, "log").mockImplementation(() => true);
 

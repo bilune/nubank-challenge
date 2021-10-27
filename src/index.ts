@@ -1,6 +1,6 @@
-import AccountController from "src/controller/account";
-import Account from "src/model/account";
-import CommandLineView from "src/view/command-line";
+import AccountController from "./controller/account";
+import Account from "./model/account";
+import CommandLineView from "./view/command-line";
 
 /**
  * Main method

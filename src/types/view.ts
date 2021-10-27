@@ -1,4 +1,4 @@
-import Controller from "src/types/controller";
+import Controller from "./controller";
 
 export default interface View {
   modelUpdated(data: unknown): void;
