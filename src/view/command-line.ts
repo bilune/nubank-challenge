@@ -5,7 +5,7 @@ import View from "../types/view";
 export default class CommandLineView implements View {
   /**
    * Output received data to the user through stdout.
-   * @param data 
+   * @param data
    */
   public modelUpdated(data: unknown): void {
     const strData = JSON.stringify(data);
@@ -14,8 +14,8 @@ export default class CommandLineView implements View {
 
   /**
    * Waits for user input through stdin and notifies the controller.
-   * @param controller 
-   * @returns 
+   * @param controller
+   * @returns
    */
   public addListener(controller: Controller): Promise<void> {
     return new Promise((resolve) => {
@@ -24,8 +24,13 @@ export default class CommandLineView implements View {
       });
 
       rl.on("line", (line: string) => {
-        const data = JSON.parse(line);
-        controller.dispatch(data);
+        if (line === "") rl.close();
+        try {
+          const data = JSON.parse(line);
+          controller.dispatch(data);
+        } catch {
+          rl.close();
+        }
       });
 
       rl.on("close", resolve);
