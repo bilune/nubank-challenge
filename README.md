@@ -60,11 +60,47 @@ As soon as I started solving the challenge, I noticed that the application I was
 1. The AccountController receives an Account that has not yet been initialized and a View.
 2. The AccountController starts the application adding the business rules to the Account and subscribing to the View.
 3. The View receives an user input and tells the subscribed AccountController about it.
-4. The AccountController validates the received input through the Account model. 
+4. The AccountController validates the received input through the Account model.
 5. The Account model executes the validations setted up in step 2 and modifies its internal state accordingly.
 6. Once the output is received by AccountController, it is send again to the View.
 7. The View displays the ouput to the user.
 
 ## Other technical decisions
 
-- Observer pattern
+- Usage of Observer pattern: as explained above, the Observer pattern was used to subscribe the Controller to the View and then receive a notification when a new user input is received. This gives the application flexibility because we can subscribe different controllers to a view and also avoids the need to change the code of the notifier class in case a new behaviour is needed.
+
+- Flexible authorizer: I used a combination of Stratagy and Composite patterns to solve the problem of flexibility in the Authorizer given the chance of new business rules that will appear in the future. With this approach, different validations are dynamically configured at initialization, and new ones can be added even later.
+
+```ts
+const accountAuthorizer = new Authorizer();
+accountAuthorizer.addValidation(new AccountUniquenessValidation());
+
+this.account.setTransactionAuthorizer(transactionAuthorizer);
+```
+
+After the initial setup is complete, the methods of the Account model will iterate over the validations adding possible violations of the business rules to the output. In this case, each Validation is considered a Strategy that shares a common interface:
+
+```ts
+interface Validation {
+  validate(account: Account, input: UserInput): boolean;
+}
+```
+
+- Command line as view: following the same principle of keeping the application flexible, I thought to consider the command line interface as a View that handles user inputs and outputs. With this approach it is possible to define new view types to receive or return data in different ways, such as a user interface or even through a REST API that ouputs JSON.
+
+## Testing
+
+The application was tested with `jest` framework. There are two kind of tests:
+
+- Integrations tests, on `/tests` folder
+- a Unit test example, located on `src/model/validation/transaction-frequency-validation.test.ts`
+
+### Run the tests
+```bash
+$ npm t
+```
+
+#### With docker
+```bash
+$ docker run -it authorize npm t
+```

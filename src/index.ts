@@ -6,12 +6,11 @@ import CommandLineView from "./view/command-line";
  * Main method
  * @returns A promise that resolves when user input finishes.
  */
-export function authorizer() {
-  return new Promise((resolve) => {
-    const view = new CommandLineView();
-    const model = new Account();
-    const controller = new AccountController(model, view);
+export async function authorizer() {
+  const view = new CommandLineView();
+  const model = new Account();
+  const controller = new AccountController(model, view);
 
-    controller.execute().then(resolve);
-  });
+  await controller.execute();
+  return model.getOperations();
 }

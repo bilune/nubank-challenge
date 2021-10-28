@@ -12,6 +12,7 @@ export default class Account {
   private transactionsAuthorizer = new Authorizer();
   private accountAuthorizer = new Authorizer();
   private transactions: TransactionUserInput[] = [];
+  private operations: Operation[] = [];
 
   /**
    *
@@ -32,6 +33,7 @@ export default class Account {
     const operation = new Operation(this);
     operation.addViolation(...violations);
 
+    this.addOperation(operation);
     return operation;
   }
 
@@ -66,6 +68,7 @@ export default class Account {
     const operation = new Operation(this);
     operation.addViolation(...violations);
 
+    this.addOperation(operation);
     return operation;
   }
 
@@ -103,6 +106,14 @@ export default class Account {
   }
 
   /**
+   * Get account's validated transactions history.
+   * @returns A list of valid transactions
+   */
+  public getOperations(): Operation[] {
+    return this.operations;
+  }
+
+  /**
    * Get account's initialized state
    * @returns Whether the account was initialized
    */
@@ -124,5 +135,13 @@ export default class Account {
    */
   public setTransactionAuthorizer(authorizer: Authorizer) {
     this.transactionsAuthorizer = authorizer;
+  }
+
+  /**
+   * Adds an output operation to Account history
+   * @param operation Output operation
+   */
+  private addOperation(operation: Operation) {
+    this.operations.push(operation);
   }
 }

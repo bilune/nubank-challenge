@@ -25,7 +25,7 @@ export default class AccountController implements Controller {
   /**
    * It starts the execution of the program.
    */
-  public execute(): Promise<void> {
+  public async execute(): Promise<Account> {
     /**
      * Account authorizer
      */
@@ -51,13 +51,15 @@ export default class AccountController implements Controller {
     this.account.setTransactionAuthorizer(transactionAuthorizer);
 
     // It waits until the view sends an user input.
-    return this.view.addListener(this);
+    await this.view.addListener(this);
+
+    return this.account;
   }
 
   /**
    * It receives an user input and try to authorize the operation.
-   * @param data 
-   * @returns 
+   * @param data
+   * @returns
    */
   public dispatch(data: Record<string, any>): void {
     let operation: Operation;
